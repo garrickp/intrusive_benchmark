@@ -1,15 +1,33 @@
 Benchmarking Intrusively Linked Lists vs. std::vec
 --------------------------------------------------
 
-Pretty much what is says on the wrapper. The test is simple, fire 50000 projectiles from 2m off the ground at a rate of 500 projectiles per second. When they are created, put them into three lists: renderable objects, physics objects, and all objects. When they "hit the ground", remove them from the three lists.
+Originally created to test the hypothesis that the worst case performance of
+intrusively linked lists is better than a nearly identical `std::vec`
+implementation.
 
-The linked list implementation uses the open source Unreal linked list code, found here:
+Pretty much what is says on the wrapper. The test is simple, fire 50000
+projectiles from 2m off the ground at a rate of 500 projectiles per second.
+When they are created, put them into three lists: renderable objects, physics
+objects, and all objects. When they "hit the ground", remove them from the
+three lists.
+
+The linked list implementation uses the open source Unreal linked list code,
+found here:
 
 https://github.com/Edgarins29/Doom3/blob/master/neo/idlib/containers/LinkList.h
 
-You are free to fork or submit pull requests; improvements to this code are always welcome.
+You are free to fork or submit pull requests; improvements to this code are
+always welcome.
 
-Results of current code, from the second consecutive run, on a late 2014 MacBook Air:
+The `std::vec` implementation is fairly naive in its deletion routine,
+improvements to this bit are particularly welcome. I look forward to validating
+my thinking on this, but since there is no randomness in the order which
+bullets are added and retrieved, the impact of the naive routine on the
+`std::vec` code is minimal.
+
+# Results of current code
+
+Taken from the second of two consecutive runs, on a late 2014 MacBook Air:
 
     $ time ./benchmark_ill
     Minimum: 0.000000
